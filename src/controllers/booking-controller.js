@@ -1,6 +1,8 @@
 const {StatusCodes} = require('http-status-codes')
 const {BookingService} = require('../services');
-const {SuccessResponse,ErrorResponse} = require('../utils/common')
+const {SuccessResponse,ErrorResponse} = require('../utils/common');
+
+
 async function createBooking(req,res) {
   try{
     const response = await BookingService.createBooking({
@@ -19,6 +21,25 @@ async function createBooking(req,res) {
       .json(ErrorResponse(error));
   }
 }
+async function makePayment(req,res) {
+  try{
+    const response = await BookingService.makePayment({
+      totalCost: req.body.totalCost,
+     userId: req.body.userId,
+     bookingId: req.body.bookingId
+    });
+    return res
+      .status(StatusCodes.OK)
+      .json(SuccessResponse(response));
+  } catch(error) {
+    
+
+    return res
+      .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(ErrorResponse(error));
+  }
+}
 module.exports = {
-    createBooking
+    createBooking,
+    makePayment
 };
