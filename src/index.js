@@ -2,6 +2,7 @@ const express = require("express");
 
 const { ServerConfig} = require("./config");
 const apiRoutes = require("./routes");
+const {CRONS} = require('./utils/common');
 const app = express();
 
 app.use(express.json());
@@ -11,4 +12,5 @@ app.use("/api", apiRoutes);
 app.listen(ServerConfig.PORT, () => {
   console.log(`Server is running on port ${ServerConfig.PORT}`);
   // Logger.info("Successfully started the server", "root", {});
+  CRONS()
 });
