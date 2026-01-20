@@ -110,7 +110,17 @@ await transaction.rollback();
     throw error;
 }
 }
+async function cancelOldBookings() {
+  try {
+    const time = new Date(Date.now() - 1000 * 300 );
+    const response = await bookingRepository.cancelOldBookings(time);
+    return response;
+  } catch(error) {
+    console.log(error)
+  }
+}
 module.exports = {
 createBooking,
-makePayment
+makePayment,
+cancelOldBookings
 }
